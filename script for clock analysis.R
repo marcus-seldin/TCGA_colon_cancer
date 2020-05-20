@@ -10,7 +10,7 @@ library(WGCNA)
 library(ggrepel)
 library(ggplot2)
 library(reshape2)
-setwd('D:/My Drive/lab files/lab files/selma masri/APC snp focused analysis/')
+setwd('')
 
 #Import Gene Annotations
 gene_annots = read.delim('HGNC_annotations.txt')
@@ -32,18 +32,7 @@ colnames(melted_cnv) = c('ens', 'TCGA_ID', 'value')
 melted_cnv$ens_sub = gsub("\\..*","",melted_cnv$ens)
 melted_cnv$gene_symbol = gene_annots$Approved.symbol[match(melted_cnv$ens_sub, gene_annots$Ensembl.ID.supplied.by.Ensembl.)]
 
-#Lets look at CNVs for APC
-APC_muts = melted_cnv[melted_cnv$gene_symbol=='APC',]
-length(unique(APC_muts$TCGA_ID))
-table(APC_muts$value)
-
-#There are some CNVs for APC, we can also inspect the somatic mutation data in teh same way
-#Read in the somatic mutation data
-snps = fread("TCGA-COAD.somaticsniper_snv.tsv.gz")
-snps[1:5,1:5]
-length(unique(snps$gene))
-
-#It looks like there are plently of disruptive SNPS in the APC gene
+#It looks like there are plently of disruptive SNPS in the clock genes
 clock_genes = c('ARNTL', 'CRY1', 'CRY2', 'PER1', 'PER2', 'CLOCK')
 clocksnps = snps[snps$gene %in% clock_genes,]
 effects = c('stop_gained', 'missense_variant')
@@ -52,14 +41,8 @@ APC_snps = clocksnps[clocksnps$effect %in% effects,]
 #APC_snps = snps[snps$gene=='APC',]
 table(APC_snps$effect)
 length(unique(APC_snps$Sample_ID))
-
-#Contrast these mutations to anotehr gene
-snps$gene[1:10]
-tp73 = snps[snps$gene=='TP73',]
-table(tp73$effect)
-
-
 apc_loss = APC_snps
+
 #Make sure it contains what we want
 table(apc_loss$effect)
 
@@ -131,17 +114,6 @@ stage_plotting$age = traits$age_at_diagnosis.diagnoses[match(stage_plotting$Samp
 stage_plotting$bmi = traits$bmi.exposures[match(stage_plotting$Sample_ID,traits$submitter_id.samples,)]
 
 stage_plotting = na.omit(stage_plotting)
-ggplot(stage_plotting, aes(x=apc_status, y=stage_score, fill=apc_status)) + geom_boxplot(fill=c('darkorchid3', 'darkorange')) + theme_minimal() + ylab('stage score') + ggtitle('Stage Score vs circadian status')
-
-ggplot(stage_plotting, aes(x=apc_status, y=age, fill=apc_status)) + geom_boxplot(fill=c('darkorchid3', 'darkorange')) + theme_minimal() + ylab('diagnosis age') + ggtitle('Diagnosis age vs circadian status')
-
-stage_plotting = stage_plotting[stage_plotting$bmi < 100,]
-ggplot(stage_plotting, aes(x=apc_status, y=bmi, fill=apc_status)) + geom_boxplot(fill=c('darkorchid3', 'darkorange')) + theme_minimal() + ylab('BMI') + ggtitle('BMI vs circadian status')
-
-
-#We use a logistic regression to estimate the significance.  While we cannot predict age of diagnosis using CNV, the specific CNV is more likely than the other
-stats = glm(formula= apc_status ~ bmi, data=stage_plotting, family = binomial)
-summary(stats)
 
 #Since we know that APC mutations are important (a significant number of mutations are found in colon cancer in general), we can find out which genes might mediate these effecs by performing DE.
 #Most of these were performed in the 3-29-20 analysis to generate a counts matrix and sample table.  The only difference is that we will add CNV and LOF mutations as variable to the table
@@ -192,21 +164,7 @@ lof_DE = as.data.frame(res)
 lof_DE = lof_DE[order(lof_DE$padj, decreasing = F),]
 
 go_terms = read.delim('Human_all_GO_terms.tab.gz')
-lof_DE$gene_symbol = row.names(lof_DE)
-write.table(lof_DE, file = 'DEGs circ missense.txt', sep = '\t', row.names = F)
 
-
-#go_terms = go_terms[!grepl('TLE7', go_terms$Gene.names),]
-
-#wnt = go_terms[grepl('Catenin', go_terms$Gene.ontology..biological.process.) | grepl('Wnt', go_terms$Gene.ontology..biological.process.) | grepl('Lrp', go_terms$Gene.ontology..biological.process.),]
-
-#wnt = go_terms[grepl('glycolysis', go_terms$Gene.ontology..biological.process.) | grepl('glucose', go_terms$Gene.ontology..biological.process.) | grepl('warburg', go_terms$Gene.ontology..biological.process.),]
-
-#wnt = go_terms[grepl('pentose', go_terms$Gene.ontology..biological.process.) | grepl('NADP', go_terms$Gene.ontology..biological.process.) | grepl('ribose', go_terms$Gene.ontology..biological.process.),]
-
-#wnt = go_terms[grepl('circadian', go_terms$Gene.ontology..biological.process.) | grepl('rhythm', go_terms$Gene.ontology..biological.process.) ,]
-
-#res1 = res2[row.names(res2) %in% wnt$Gene.names,]
 res1 = lof_DE
 hist(-log10(res1$pvalue), n = 200)
 res1 = na.omit(res1)
