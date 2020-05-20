@@ -1,0 +1,76 @@
+Gene	Category
+APC	Driver
+ARNTL	Circadian
+PDK1	glycolysis
+PKM2	glycolysis
+SLC16A1	Transport
+SLC2A1	Transport
+SLC2A2	Transport
+NAMPT	Metabolism
+SLC16A7	Transport
+SLC16A3	Transport
+PFKM	glycolysis
+GCK	glycolysis
+SIRT3	Metabolism
+ACLY	Metabolism
+PDHA1	glycolysis
+PDHB	glycolysis
+PCX	Metabolism
+SLC2A4	Metabolism
+MYC	Driver
+MAX	Metabolism
+MLXIP	Metabolism
+MXD1	APC signaling
+MXD3	APC signaling
+MXD4	APC signaling
+MGA	APC signaling
+MNT	Metabolism
+MXI1	Metabolism
+TXNIP	Metabolism
+LGR5	APC signaling
+LGR4	APC signaling
+LGR6	APC signaling
+SLC16A8	Transport
+GLS2	Metabolism
+FASN	SREBP
+SLC1A5	Transport
+SLC7A5	Transport
+GLS1	glycolysis
+CRY1	Circadian
+CRY2	Circadian
+TP53	Driver
+ASCL2	Metabolism
+CBS	Metabolism
+GOT2	glycolysis
+GPT2	glycolysis
+SLC3A2	Transport
+SLC38A2	Transport
+SLC38A5	Transport
+FFAR2	Metabolism
+FFAR3	Metabolism
+FFAR4	Metabolism
+CDC25A	APC signaling
+NPM1	APC signaling
+PTGS1	Metabolism
+ENO1	glycolysis
+PHGDH	glycolysis
+GLUD1	Metabolism
+SCD1	Metabolism
+SREBF1	SREBP
+ACACA	SREBP
+PGC1A	Metabolism
+LDHA	glycolysis
+CPT1A	Metabolism
+MPC1	Metabolism
+MPC2	Metabolism
+SIRT1	Metabolism
+HK2	glycolysis
+MLX	Metabolism
+ACACB	Metabolism
+KRAS	Driver
+BRAF	Driver
+PIK3CA	Driver
+SMAD4	Driver
+PER1	Circadian
+CLOCK	Circadian
+PER2	Circadian
