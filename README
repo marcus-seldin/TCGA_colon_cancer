@@ -1,0 +1,6 @@
+## TCGA analysis of colon cancer data aimed at defining interaction between circadian clock, relevant signaling pathways and tumor progression
+
+#All datasets required for analysis are contained in this repository, with the exception of the RNA-Seq data.  This was downloaded directly from UCSC Xena:
+https://xenabrowser.net/datapages/?dataset=TCGA-COAD.htseq_fpkm.tsv&host=https%3A%2F%2Fgdc.xenahubs.net&removeHub=https%3A%2F%2Fxena.treehouse.gi.ucsc.edu%3A443
+
+#The zipped dataset can be downloaded directly.  In these scripts, it is read in as "Colon_cancer_Seq.gz"
